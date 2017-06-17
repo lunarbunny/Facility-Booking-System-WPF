@@ -1,0 +1,843 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BookingSystemDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="HotelBedTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BedType" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="HotelBookings">
+          <Key>
+            <PropertyRef Name="BookingID" />
+          </Key>
+          <Property Name="BookingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Booking_User" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RoomID" Type="int" Nullable="false" />
+          <Property Name="CheckInDate" Type="datetime" Nullable="false" />
+          <Property Name="CheckOutDate" Type="datetime" Nullable="false" />
+          <Property Name="ServiceID" Type="int" Nullable="false" />
+          <Property Name="Price" Type="smallmoney" Nullable="false" />
+          <Property Name="TransactionID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="HotelRooms">
+          <Key>
+            <PropertyRef Name="RoomID" />
+          </Key>
+          <Property Name="RoomID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeID" Type="int" Nullable="false" />
+          <Property Name="ViewID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="HotelRoomServices">
+          <Key>
+            <PropertyRef Name="ServiceID" />
+          </Key>
+          <Property Name="ServiceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WiFi-Service" Type="bit" Nullable="false" />
+          <Property Name="Room-Service" Type="bit" Nullable="false" />
+          <Property Name="House-Keeping" Type="bit" Nullable="false" />
+          <Property Name="Express Queue" Type="bit" Nullable="false" />
+          <Property Name="Bed_Type" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="HotelRoomTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoomClass" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="HotelRoomViews">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ViewType" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PriceTable">
+          <Key>
+            <PropertyRef Name="Item" />
+          </Key>
+          <Property Name="Item" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="smallmoney" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SportBookings">
+          <Key>
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="BookingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Booking_User" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="BookingDate" Type="datetime" Nullable="false" />
+          <Property Name="FacilityId" Type="int" Nullable="false" />
+          <Property Name="TimeSlot" Type="int" Nullable="false" />
+          <Property Name="Duration" Type="int" Nullable="false" />
+          <Property Name="Price" Type="smallmoney" Nullable="false" />
+          <Property Name="TransactionID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SportDurations">
+          <Key>
+            <PropertyRef Name="DurationId" />
+          </Key>
+          <Property Name="DurationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Hours" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SportFacilities">
+          <Key>
+            <PropertyRef Name="FacilityId" />
+          </Key>
+          <Property Name="FacilityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FacilityName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SportTimeSlots">
+          <Key>
+            <PropertyRef Name="SlotId" />
+          </Key>
+          <Property Name="SlotId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TimeSlot" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Transactions">
+          <Key>
+            <PropertyRef Name="TransactionID" />
+          </Key>
+          <Property Name="TransactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransactionDate" Type="datetime" Nullable="false" />
+          <Property Name="SessionStart" Type="datetime" Nullable="false" />
+          <Property Name="SessionEnd" Type="datetime" Nullable="false" />
+          <Property Name="SessionDuration" Type="time" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password_Hash" Type="char" MaxLength="64" Nullable="false" />
+          <Property Name="Password_Salt" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="User_Group" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Bed_Type">
+          <End Role="HotelBedTypes" Type="Self.HotelBedTypes" Multiplicity="1" />
+          <End Role="HotelRoomServices" Type="Self.HotelRoomServices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HotelBedTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HotelRoomServices">
+              <PropertyRef Name="Bed_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Booking_User_Hotel">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="HotelBookings" Type="Self.HotelBookings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="HotelBookings">
+              <PropertyRef Name="Booking_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Booking_User_Sport">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SportBookings" Type="Self.SportBookings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="SportBookings">
+              <PropertyRef Name="Booking_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Duration">
+          <End Role="SportDurations" Type="Self.SportDurations" Multiplicity="1" />
+          <End Role="SportBookings" Type="Self.SportBookings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SportDurations">
+              <PropertyRef Name="DurationId" />
+            </Principal>
+            <Dependent Role="SportBookings">
+              <PropertyRef Name="Duration" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FacilityId">
+          <End Role="SportFacilities" Type="Self.SportFacilities" Multiplicity="1" />
+          <End Role="SportBookings" Type="Self.SportBookings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SportFacilities">
+              <PropertyRef Name="FacilityId" />
+            </Principal>
+            <Dependent Role="SportBookings">
+              <PropertyRef Name="FacilityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoomID">
+          <End Role="HotelRooms" Type="Self.HotelRooms" Multiplicity="1" />
+          <End Role="HotelBookings" Type="Self.HotelBookings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HotelRooms">
+              <PropertyRef Name="RoomID" />
+            </Principal>
+            <Dependent Role="HotelBookings">
+              <PropertyRef Name="RoomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Services">
+          <End Role="HotelRoomServices" Type="Self.HotelRoomServices" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="HotelBookings" Type="Self.HotelBookings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HotelRoomServices">
+              <PropertyRef Name="ServiceID" />
+            </Principal>
+            <Dependent Role="HotelBookings">
+              <PropertyRef Name="ServiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeSlot">
+          <End Role="SportTimeSlots" Type="Self.SportTimeSlots" Multiplicity="1" />
+          <End Role="SportBookings" Type="Self.SportBookings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SportTimeSlots">
+              <PropertyRef Name="SlotId" />
+            </Principal>
+            <Dependent Role="SportBookings">
+              <PropertyRef Name="TimeSlot" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactionID_Hotel">
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="1" />
+          <End Role="HotelBookings" Type="Self.HotelBookings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transactions">
+              <PropertyRef Name="TransactionID" />
+            </Principal>
+            <Dependent Role="HotelBookings">
+              <PropertyRef Name="TransactionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactionID_Sport">
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="1" />
+          <End Role="SportBookings" Type="Self.SportBookings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transactions">
+              <PropertyRef Name="TransactionID" />
+            </Principal>
+            <Dependent Role="SportBookings">
+              <PropertyRef Name="TransactionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TypeID">
+          <End Role="HotelRoomTypes" Type="Self.HotelRoomTypes" Multiplicity="1" />
+          <End Role="HotelRooms" Type="Self.HotelRooms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HotelRoomTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HotelRooms">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ViewID">
+          <End Role="HotelRoomViews" Type="Self.HotelRoomViews" Multiplicity="1" />
+          <End Role="HotelRooms" Type="Self.HotelRooms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HotelRoomViews">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HotelRooms">
+              <PropertyRef Name="ViewID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BookingSystemDBModelStoreContainer">
+          <EntitySet Name="HotelBedTypes" EntityType="Self.HotelBedTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HotelBookings" EntityType="Self.HotelBookings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HotelRooms" EntityType="Self.HotelRooms" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HotelRoomServices" EntityType="Self.HotelRoomServices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HotelRoomTypes" EntityType="Self.HotelRoomTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HotelRoomViews" EntityType="Self.HotelRoomViews" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PriceTable" EntityType="Self.PriceTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SportBookings" EntityType="Self.SportBookings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SportDurations" EntityType="Self.SportDurations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SportFacilities" EntityType="Self.SportFacilities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SportTimeSlots" EntityType="Self.SportTimeSlots" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Bed_Type" Association="Self.FK_Bed_Type">
+            <End Role="HotelBedTypes" EntitySet="HotelBedTypes" />
+            <End Role="HotelRoomServices" EntitySet="HotelRoomServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Booking_User_Hotel" Association="Self.FK_Booking_User_Hotel">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="HotelBookings" EntitySet="HotelBookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Booking_User_Sport" Association="Self.FK_Booking_User_Sport">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="SportBookings" EntitySet="SportBookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Duration" Association="Self.FK_Duration">
+            <End Role="SportDurations" EntitySet="SportDurations" />
+            <End Role="SportBookings" EntitySet="SportBookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FacilityId" Association="Self.FK_FacilityId">
+            <End Role="SportFacilities" EntitySet="SportFacilities" />
+            <End Role="SportBookings" EntitySet="SportBookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoomID" Association="Self.FK_RoomID">
+            <End Role="HotelRooms" EntitySet="HotelRooms" />
+            <End Role="HotelBookings" EntitySet="HotelBookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Services" Association="Self.FK_Services">
+            <End Role="HotelRoomServices" EntitySet="HotelRoomServices" />
+            <End Role="HotelBookings" EntitySet="HotelBookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeSlot" Association="Self.FK_TimeSlot">
+            <End Role="SportTimeSlots" EntitySet="SportTimeSlots" />
+            <End Role="SportBookings" EntitySet="SportBookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactionID_Hotel" Association="Self.FK_TransactionID_Hotel">
+            <End Role="Transactions" EntitySet="Transactions" />
+            <End Role="HotelBookings" EntitySet="HotelBookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactionID_Sport" Association="Self.FK_TransactionID_Sport">
+            <End Role="Transactions" EntitySet="Transactions" />
+            <End Role="SportBookings" EntitySet="SportBookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TypeID" Association="Self.FK_TypeID">
+            <End Role="HotelRoomTypes" EntitySet="HotelRoomTypes" />
+            <End Role="HotelRooms" EntitySet="HotelRooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ViewID" Association="Self.FK_ViewID">
+            <End Role="HotelRoomViews" EntitySet="HotelRoomViews" />
+            <End Role="HotelRooms" EntitySet="HotelRooms" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BookingSystemDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="BookingSystemDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="HotelBedTypes" EntityType="BookingSystemDBModel.HotelBedType" />
+          <EntitySet Name="HotelBookings" EntityType="BookingSystemDBModel.HotelBooking" />
+          <EntitySet Name="HotelRooms" EntityType="BookingSystemDBModel.HotelRoom" />
+          <EntitySet Name="HotelRoomServices" EntityType="BookingSystemDBModel.HotelRoomService" />
+          <EntitySet Name="HotelRoomTypes" EntityType="BookingSystemDBModel.HotelRoomType" />
+          <EntitySet Name="HotelRoomViews" EntityType="BookingSystemDBModel.HotelRoomView" />
+          <EntitySet Name="PriceTables" EntityType="BookingSystemDBModel.PriceTable" />
+          <EntitySet Name="SportBookings" EntityType="BookingSystemDBModel.SportBooking" />
+          <EntitySet Name="SportDurations" EntityType="BookingSystemDBModel.SportDuration" />
+          <EntitySet Name="SportFacilities" EntityType="BookingSystemDBModel.SportFacility" />
+          <EntitySet Name="SportTimeSlots" EntityType="BookingSystemDBModel.SportTimeSlot" />
+          <EntitySet Name="Transactions" EntityType="BookingSystemDBModel.Transaction" />
+          <EntitySet Name="Users" EntityType="BookingSystemDBModel.User" />
+          <AssociationSet Name="FK_Bed_Type" Association="BookingSystemDBModel.FK_Bed_Type">
+            <End Role="HotelBedType" EntitySet="HotelBedTypes" />
+            <End Role="HotelRoomService" EntitySet="HotelRoomServices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Booking_User_Hotel" Association="BookingSystemDBModel.FK_Booking_User_Hotel">
+            <End Role="User" EntitySet="Users" />
+            <End Role="HotelBooking" EntitySet="HotelBookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoomID" Association="BookingSystemDBModel.FK_RoomID">
+            <End Role="HotelRoom" EntitySet="HotelRooms" />
+            <End Role="HotelBooking" EntitySet="HotelBookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Services" Association="BookingSystemDBModel.FK_Services">
+            <End Role="HotelRoomService" EntitySet="HotelRoomServices" />
+            <End Role="HotelBooking" EntitySet="HotelBookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactionID_Hotel" Association="BookingSystemDBModel.FK_TransactionID_Hotel">
+            <End Role="Transaction" EntitySet="Transactions" />
+            <End Role="HotelBooking" EntitySet="HotelBookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TypeID" Association="BookingSystemDBModel.FK_TypeID">
+            <End Role="HotelRoomType" EntitySet="HotelRoomTypes" />
+            <End Role="HotelRoom" EntitySet="HotelRooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ViewID" Association="BookingSystemDBModel.FK_ViewID">
+            <End Role="HotelRoomView" EntitySet="HotelRoomViews" />
+            <End Role="HotelRoom" EntitySet="HotelRooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Booking_User_Sport" Association="BookingSystemDBModel.FK_Booking_User_Sport">
+            <End Role="User" EntitySet="Users" />
+            <End Role="SportBooking" EntitySet="SportBookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Duration" Association="BookingSystemDBModel.FK_Duration">
+            <End Role="SportDuration" EntitySet="SportDurations" />
+            <End Role="SportBooking" EntitySet="SportBookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FacilityId" Association="BookingSystemDBModel.FK_FacilityId">
+            <End Role="SportFacility" EntitySet="SportFacilities" />
+            <End Role="SportBooking" EntitySet="SportBookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TimeSlot" Association="BookingSystemDBModel.FK_TimeSlot">
+            <End Role="SportTimeSlot" EntitySet="SportTimeSlots" />
+            <End Role="SportBooking" EntitySet="SportBookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactionID_Sport" Association="BookingSystemDBModel.FK_TransactionID_Sport">
+            <End Role="Transaction" EntitySet="Transactions" />
+            <End Role="SportBooking" EntitySet="SportBookings" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="HotelBedType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BedType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="HotelRoomServices" Relationship="BookingSystemDBModel.FK_Bed_Type" FromRole="HotelBedType" ToRole="HotelRoomService" />
+        </EntityType>
+        <EntityType Name="HotelBooking">
+          <Key>
+            <PropertyRef Name="BookingID" />
+          </Key>
+          <Property Name="BookingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Booking_User" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RoomID" Type="Int32" Nullable="false" />
+          <Property Name="CheckInDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CheckOutDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ServiceID" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
+          <Property Name="TransactionID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="BookingSystemDBModel.FK_Booking_User_Hotel" FromRole="HotelBooking" ToRole="User" />
+          <NavigationProperty Name="HotelRoom" Relationship="BookingSystemDBModel.FK_RoomID" FromRole="HotelBooking" ToRole="HotelRoom" />
+          <NavigationProperty Name="HotelRoomService" Relationship="BookingSystemDBModel.FK_Services" FromRole="HotelBooking" ToRole="HotelRoomService" />
+          <NavigationProperty Name="Transaction" Relationship="BookingSystemDBModel.FK_TransactionID_Hotel" FromRole="HotelBooking" ToRole="Transaction" />
+        </EntityType>
+        <EntityType Name="HotelRoom">
+          <Key>
+            <PropertyRef Name="RoomID" />
+          </Key>
+          <Property Name="RoomID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeID" Type="Int32" Nullable="false" />
+          <Property Name="ViewID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="HotelBookings" Relationship="BookingSystemDBModel.FK_RoomID" FromRole="HotelRoom" ToRole="HotelBooking" />
+          <NavigationProperty Name="HotelRoomType" Relationship="BookingSystemDBModel.FK_TypeID" FromRole="HotelRoom" ToRole="HotelRoomType" />
+          <NavigationProperty Name="HotelRoomView" Relationship="BookingSystemDBModel.FK_ViewID" FromRole="HotelRoom" ToRole="HotelRoomView" />
+        </EntityType>
+        <EntityType Name="HotelRoomService">
+          <Key>
+            <PropertyRef Name="ServiceID" />
+          </Key>
+          <Property Name="ServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WiFi_Service" Type="Boolean" Nullable="false" />
+          <Property Name="Room_Service" Type="Boolean" Nullable="false" />
+          <Property Name="House_Keeping" Type="Boolean" Nullable="false" />
+          <Property Name="Express_Queue" Type="Boolean" Nullable="false" />
+          <Property Name="Bed_Type" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="HotelBedType" Relationship="BookingSystemDBModel.FK_Bed_Type" FromRole="HotelRoomService" ToRole="HotelBedType" />
+          <NavigationProperty Name="HotelBookings" Relationship="BookingSystemDBModel.FK_Services" FromRole="HotelRoomService" ToRole="HotelBooking" />
+        </EntityType>
+        <EntityType Name="HotelRoomType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoomClass" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="HotelRooms" Relationship="BookingSystemDBModel.FK_TypeID" FromRole="HotelRoomType" ToRole="HotelRoom" />
+        </EntityType>
+        <EntityType Name="HotelRoomView">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ViewType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="HotelRooms" Relationship="BookingSystemDBModel.FK_ViewID" FromRole="HotelRoomView" ToRole="HotelRoom" />
+        </EntityType>
+        <EntityType Name="PriceTable">
+          <Key>
+            <PropertyRef Name="Item" />
+          </Key>
+          <Property Name="Item" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
+        </EntityType>
+        <EntityType Name="SportBooking">
+          <Key>
+            <PropertyRef Name="BookingId" />
+          </Key>
+          <Property Name="BookingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Booking_User" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BookingDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FacilityId" Type="Int32" Nullable="false" />
+          <Property Name="TimeSlot" Type="Int32" Nullable="false" />
+          <Property Name="Duration" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
+          <Property Name="TransactionID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="BookingSystemDBModel.FK_Booking_User_Sport" FromRole="SportBooking" ToRole="User" />
+          <NavigationProperty Name="SportDuration" Relationship="BookingSystemDBModel.FK_Duration" FromRole="SportBooking" ToRole="SportDuration" />
+          <NavigationProperty Name="SportFacility" Relationship="BookingSystemDBModel.FK_FacilityId" FromRole="SportBooking" ToRole="SportFacility" />
+          <NavigationProperty Name="SportTimeSlot" Relationship="BookingSystemDBModel.FK_TimeSlot" FromRole="SportBooking" ToRole="SportTimeSlot" />
+          <NavigationProperty Name="Transaction" Relationship="BookingSystemDBModel.FK_TransactionID_Sport" FromRole="SportBooking" ToRole="Transaction" />
+        </EntityType>
+        <EntityType Name="SportDuration">
+          <Key>
+            <PropertyRef Name="DurationId" />
+          </Key>
+          <Property Name="DurationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Hours" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SportBookings" Relationship="BookingSystemDBModel.FK_Duration" FromRole="SportDuration" ToRole="SportBooking" />
+        </EntityType>
+        <EntityType Name="SportFacility">
+          <Key>
+            <PropertyRef Name="FacilityId" />
+          </Key>
+          <Property Name="FacilityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FacilityName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SportBookings" Relationship="BookingSystemDBModel.FK_FacilityId" FromRole="SportFacility" ToRole="SportBooking" />
+        </EntityType>
+        <EntityType Name="SportTimeSlot">
+          <Key>
+            <PropertyRef Name="SlotId" />
+          </Key>
+          <Property Name="SlotId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TimeSlot" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SportBookings" Relationship="BookingSystemDBModel.FK_TimeSlot" FromRole="SportTimeSlot" ToRole="SportBooking" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="TransactionID" />
+          </Key>
+          <Property Name="TransactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransactionDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SessionStart" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SessionEnd" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SessionDuration" Type="Time" Nullable="false" Precision="7" />
+          <NavigationProperty Name="HotelBookings" Relationship="BookingSystemDBModel.FK_TransactionID_Hotel" FromRole="Transaction" ToRole="HotelBooking" />
+          <NavigationProperty Name="SportBookings" Relationship="BookingSystemDBModel.FK_TransactionID_Sport" FromRole="Transaction" ToRole="SportBooking" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password_Hash" Type="String" Nullable="false" MaxLength="64" FixedLength="true" Unicode="false" />
+          <Property Name="Password_Salt" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="User_Group" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="HotelBookings" Relationship="BookingSystemDBModel.FK_Booking_User_Hotel" FromRole="User" ToRole="HotelBooking" />
+          <NavigationProperty Name="SportBookings" Relationship="BookingSystemDBModel.FK_Booking_User_Sport" FromRole="User" ToRole="SportBooking" />
+        </EntityType>
+        <Association Name="FK_Bed_Type">
+          <End Type="BookingSystemDBModel.HotelBedType" Role="HotelBedType" Multiplicity="1" />
+          <End Type="BookingSystemDBModel.HotelRoomService" Role="HotelRoomService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HotelBedType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HotelRoomService">
+              <PropertyRef Name="Bed_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Booking_User_Hotel">
+          <End Type="BookingSystemDBModel.User" Role="User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BookingSystemDBModel.HotelBooking" Role="HotelBooking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="HotelBooking">
+              <PropertyRef Name="Booking_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoomID">
+          <End Type="BookingSystemDBModel.HotelRoom" Role="HotelRoom" Multiplicity="1" />
+          <End Type="BookingSystemDBModel.HotelBooking" Role="HotelBooking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HotelRoom">
+              <PropertyRef Name="RoomID" />
+            </Principal>
+            <Dependent Role="HotelBooking">
+              <PropertyRef Name="RoomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Services">
+          <End Type="BookingSystemDBModel.HotelRoomService" Role="HotelRoomService" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BookingSystemDBModel.HotelBooking" Role="HotelBooking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HotelRoomService">
+              <PropertyRef Name="ServiceID" />
+            </Principal>
+            <Dependent Role="HotelBooking">
+              <PropertyRef Name="ServiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactionID_Hotel">
+          <End Type="BookingSystemDBModel.Transaction" Role="Transaction" Multiplicity="1" />
+          <End Type="BookingSystemDBModel.HotelBooking" Role="HotelBooking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaction">
+              <PropertyRef Name="TransactionID" />
+            </Principal>
+            <Dependent Role="HotelBooking">
+              <PropertyRef Name="TransactionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TypeID">
+          <End Type="BookingSystemDBModel.HotelRoomType" Role="HotelRoomType" Multiplicity="1" />
+          <End Type="BookingSystemDBModel.HotelRoom" Role="HotelRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HotelRoomType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HotelRoom">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ViewID">
+          <End Type="BookingSystemDBModel.HotelRoomView" Role="HotelRoomView" Multiplicity="1" />
+          <End Type="BookingSystemDBModel.HotelRoom" Role="HotelRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HotelRoomView">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="HotelRoom">
+              <PropertyRef Name="ViewID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Booking_User_Sport">
+          <End Type="BookingSystemDBModel.User" Role="User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BookingSystemDBModel.SportBooking" Role="SportBooking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="SportBooking">
+              <PropertyRef Name="Booking_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Duration">
+          <End Type="BookingSystemDBModel.SportDuration" Role="SportDuration" Multiplicity="1" />
+          <End Type="BookingSystemDBModel.SportBooking" Role="SportBooking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SportDuration">
+              <PropertyRef Name="DurationId" />
+            </Principal>
+            <Dependent Role="SportBooking">
+              <PropertyRef Name="Duration" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FacilityId">
+          <End Type="BookingSystemDBModel.SportFacility" Role="SportFacility" Multiplicity="1" />
+          <End Type="BookingSystemDBModel.SportBooking" Role="SportBooking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SportFacility">
+              <PropertyRef Name="FacilityId" />
+            </Principal>
+            <Dependent Role="SportBooking">
+              <PropertyRef Name="FacilityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TimeSlot">
+          <End Type="BookingSystemDBModel.SportTimeSlot" Role="SportTimeSlot" Multiplicity="1" />
+          <End Type="BookingSystemDBModel.SportBooking" Role="SportBooking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SportTimeSlot">
+              <PropertyRef Name="SlotId" />
+            </Principal>
+            <Dependent Role="SportBooking">
+              <PropertyRef Name="TimeSlot" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactionID_Sport">
+          <End Type="BookingSystemDBModel.Transaction" Role="Transaction" Multiplicity="1" />
+          <End Type="BookingSystemDBModel.SportBooking" Role="SportBooking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transaction">
+              <PropertyRef Name="TransactionID" />
+            </Principal>
+            <Dependent Role="SportBooking">
+              <PropertyRef Name="TransactionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BookingSystemDBModelStoreContainer" CdmEntityContainer="BookingSystemDBEntities">
+          <EntitySetMapping Name="HotelBedTypes">
+            <EntityTypeMapping TypeName="BookingSystemDBModel.HotelBedType">
+              <MappingFragment StoreEntitySet="HotelBedTypes">
+                <ScalarProperty Name="BedType" ColumnName="BedType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HotelBookings">
+            <EntityTypeMapping TypeName="BookingSystemDBModel.HotelBooking">
+              <MappingFragment StoreEntitySet="HotelBookings">
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+                <ScalarProperty Name="CheckOutDate" ColumnName="CheckOutDate" />
+                <ScalarProperty Name="CheckInDate" ColumnName="CheckInDate" />
+                <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+                <ScalarProperty Name="Booking_User" ColumnName="Booking_User" />
+                <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HotelRooms">
+            <EntityTypeMapping TypeName="BookingSystemDBModel.HotelRoom">
+              <MappingFragment StoreEntitySet="HotelRooms">
+                <ScalarProperty Name="ViewID" ColumnName="ViewID" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HotelRoomServices">
+            <EntityTypeMapping TypeName="BookingSystemDBModel.HotelRoomService">
+              <MappingFragment StoreEntitySet="HotelRoomServices">
+                <ScalarProperty Name="Bed_Type" ColumnName="Bed_Type" />
+                <ScalarProperty Name="Express_Queue" ColumnName="Express Queue" />
+                <ScalarProperty Name="House_Keeping" ColumnName="House-Keeping" />
+                <ScalarProperty Name="Room_Service" ColumnName="Room-Service" />
+                <ScalarProperty Name="WiFi_Service" ColumnName="WiFi-Service" />
+                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HotelRoomTypes">
+            <EntityTypeMapping TypeName="BookingSystemDBModel.HotelRoomType">
+              <MappingFragment StoreEntitySet="HotelRoomTypes">
+                <ScalarProperty Name="RoomClass" ColumnName="RoomClass" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HotelRoomViews">
+            <EntityTypeMapping TypeName="BookingSystemDBModel.HotelRoomView">
+              <MappingFragment StoreEntitySet="HotelRoomViews">
+                <ScalarProperty Name="ViewType" ColumnName="ViewType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PriceTables">
+            <EntityTypeMapping TypeName="BookingSystemDBModel.PriceTable">
+              <MappingFragment StoreEntitySet="PriceTable">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Item" ColumnName="Item" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SportBookings">
+            <EntityTypeMapping TypeName="BookingSystemDBModel.SportBooking">
+              <MappingFragment StoreEntitySet="SportBookings">
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="TimeSlot" ColumnName="TimeSlot" />
+                <ScalarProperty Name="FacilityId" ColumnName="FacilityId" />
+                <ScalarProperty Name="BookingDate" ColumnName="BookingDate" />
+                <ScalarProperty Name="Booking_User" ColumnName="Booking_User" />
+                <ScalarProperty Name="BookingId" ColumnName="BookingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SportDurations">
+            <EntityTypeMapping TypeName="BookingSystemDBModel.SportDuration">
+              <MappingFragment StoreEntitySet="SportDurations">
+                <ScalarProperty Name="Hours" ColumnName="Hours" />
+                <ScalarProperty Name="DurationId" ColumnName="DurationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SportFacilities">
+            <EntityTypeMapping TypeName="BookingSystemDBModel.SportFacility">
+              <MappingFragment StoreEntitySet="SportFacilities">
+                <ScalarProperty Name="FacilityName" ColumnName="FacilityName" />
+                <ScalarProperty Name="FacilityId" ColumnName="FacilityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SportTimeSlots">
+            <EntityTypeMapping TypeName="BookingSystemDBModel.SportTimeSlot">
+              <MappingFragment StoreEntitySet="SportTimeSlots">
+                <ScalarProperty Name="TimeSlot" ColumnName="TimeSlot" />
+                <ScalarProperty Name="SlotId" ColumnName="SlotId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transactions">
+            <EntityTypeMapping TypeName="BookingSystemDBModel.Transaction">
+              <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="SessionDuration" ColumnName="SessionDuration" />
+                <ScalarProperty Name="SessionEnd" ColumnName="SessionEnd" />
+                <ScalarProperty Name="SessionStart" ColumnName="SessionStart" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="BookingSystemDBModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="User_Group" ColumnName="User_Group" />
+                <ScalarProperty Name="Password_Salt" ColumnName="Password_Salt" />
+                <ScalarProperty Name="Password_Hash" ColumnName="Password_Hash" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

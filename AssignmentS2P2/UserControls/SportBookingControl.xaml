@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="AssignmentS2P2.SportBookingControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:AssignmentS2P2"
+             mc:Ignorable="d" 
+             d:DesignHeight="582" d:DesignWidth="1092" Background="White" Initialized="UserControl_Initialized">
+    <Canvas>
+        <Grid Height="222" Width="1092">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="41*"/>
+                <RowDefinition Height="12*"/>
+            </Grid.RowDefinitions>
+            <Image Source="/Images/sport.jpeg" Stretch="UniformToFill" Grid.RowSpan="2"/>
+            <Rectangle Fill="#66001E44" Grid.Row="2"></Rectangle>
+            <TextBlock x:Name="textBlockSportFacility" Margin="54,10,672,10" Grid.Row="1" TextWrapping="Wrap" Text="Sports facility Booking system" FontSize="22" FontWeight="Bold" Foreground="Lime"/>
+        </Grid>
+        <DatePicker x:Name="datepickerSport" Width="313" Height="26" SelectedDateFormat="Long" Background="Transparent" Canvas.Left="260" Canvas.Top="293">
+            <DatePicker.Resources>
+                <Style TargetType="DatePickerTextBox">
+                    <Setter Property="IsReadOnly" Value="True"/>
+                </Style>
+            </DatePicker.Resources>
+        </DatePicker>
+        <Button x:Name="buttonSportAddToCart" Content="Add To Cart" HorizontalAlignment="Left" VerticalAlignment="Top" Width="301" Height="26" Click="buttonSportAddToCart_Click" Canvas.Left="726" Canvas.Top="513"/>
+        <Label x:Name="labelSportDate" Content="Booking Date:" Height="26" Width="173" Canvas.Left="82" Canvas.Top="293"/>
+        <Label x:Name="labelSportFacilityChoice" Content="Sports Facility:" Height="26" Width="172" Canvas.Left="83" Canvas.Top="350"/>
+        <Label x:Name="labelSportTimeSlot" Content="Time Slot:" Height="26" Width="172" Canvas.Left="83" Canvas.Top="410"/>
+        <CheckBox x:Name="checkBoxSportBookingDuration" Content="Booking Duration (Hours):" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="173" RenderTransformOrigin="1.53,2.231" Checked="checkBoxSportBookingDuration_Checked" Unchecked="checkBoxSportBookingDuration_Unchecked" Canvas.Left="82" Canvas.Top="470"/>
+        <ComboBox x:Name="comboBoxSportFacilityChoice" IsReadOnly="True" Width="313" Height="26" Canvas.Left="260" Canvas.Top="350"/>
+        <ComboBox x:Name="comboBoxSportBookingDuration" IsReadOnly="True" Width="313" Height="26" Canvas.Left="260" Canvas.Top="470"/>
+        <ComboBox x:Name="comboBoxSportTimeSlot" IsReadOnly="True" Width="313" Height="26" Canvas.Left="260" Canvas.Top="410"/>
+        <Button x:Name="buttonSportClearSelection" Content="Clear Selection" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Height="26" Canvas.Left="726" Canvas.Top="472" Click="buttonSportClearSelection_Click"/>
+        <Button x:Name="buttonSportAvailability" Content="Facility Availability" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Height="26" Canvas.Left="877" Canvas.Top="472" Click="buttonSportAvailability_Click"/>
+
+    </Canvas>
+</UserControl>
