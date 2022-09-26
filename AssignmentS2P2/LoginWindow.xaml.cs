@@ -1,6 +1,4 @@
-﻿using Microsoft.SqlServer.Management.Common;
-using Microsoft.SqlServer.Management.Smo;
-using System;
+﻿using System;
 using System.Data.SqlClient;
 using System.IO;
 using System.Windows;
@@ -122,12 +120,14 @@ namespace AssignmentS2P2
                         return;
                     }
 
-                    string sqlConnectionString = @"Server=.\SQLEXPRESS;database=master;Integrated security=True";
+                    string sqlConnectionString = @"Server=.;database=master;Integrated security=True";
                     string createAndPopulateScript = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SQLScripts", "GenerateDBScript.sql"));
                     using (SqlConnection conn = new SqlConnection(sqlConnectionString))
                     {
-                        Server server = new Server(new ServerConnection(conn));
-                        server.ConnectionContext.ExecuteNonQuery(createAndPopulateScript);
+                        using (var command = new SqlCommand(createAndPopulateScript, conn))
+                        {
+                            command.ExecuteNonQuery();
+                        }
                     }
 
                     MessageBox.Show("Database \"BookingSystemDB\" has been created and populated.\r\nThe default connection string for Entity Framework points to (local)\\SQLEXPRESS with database name as mentioned above and should not require any config unless database name is different.", "SQL Database", MessageBoxButton.OK, MessageBoxImage.Information);

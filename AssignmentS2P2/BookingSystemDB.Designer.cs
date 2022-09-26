@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Tingwei\Desktop\School Software\Docs\Year 1\Semester 2\APPD\Assignments\AssignmentS2P2\AssignmentS2P2\BookingSystemDB.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\tingw\Desktop\Projects\Hotel-Room-Sports-Facility-Booking-System-V.2\AssignmentS2P2\BookingSystemDB.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
